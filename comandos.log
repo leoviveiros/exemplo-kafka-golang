@@ -1,0 +1,25 @@
+docker exec -it exemplo-kafka_kafka_1 bash
+
+## Topics ##
+
+kafka-topics --bootstrap-server=localhost:9092 --create --topic=teste --partitions=3
+
+kafka-topics --bootstrap-server=localhost:9092 --list
+
+kafka-topics --bootstrap-server=localhost:9092 --describe --topic=teste
+
+## Consumer ##
+
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=teste
+
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=teste --group=x
+
+kafka-console-groups --bootstrap-server=localhost:9092 --group=x --describe
+
+## Producer ##
+
+kafka-console-producer --bootstrap-server=localhost:9092 --topic=teste
+
+## Control Center ##
+
+http://localhost:9021
