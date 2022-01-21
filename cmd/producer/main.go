@@ -1,13 +1,26 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-func main() {
+func main() {	
 	producer := NewKafkaProducer()
+	deliveryChan := make(chan kafka.Event)
 
-	Publish("Hello World", "teste", producer, nil)
+	Publish("Hello World", "teste", producer, nil, deliveryChan)
+	
+	event := <-deliveryChan
+	msg := event.(*kafka.Message)
+	
+	if msg.TopicPartition.Error != nil {
+		fmt.Println("Erro ao enviar mensagem: ", msg.TopicPartition.Error)
+	} else {
+		fmt.Println("Mensagem enviada - partition: ", msg.TopicPartition.Partition, " offset: ", msg.TopicPartition.Offset)
+	}
+
 	producer.Flush(1000)
 }
 
@@ -25,7 +38,7 @@ func NewKafkaProducer() *kafka.Producer {
 	return producer
 }
 
-func Publish(msg string, topic string, producer *kafka.Producer, key []byte) error {
+func Publish(msg string, topic string, producer *kafka.Producer, key []byte, deliveryChan chan kafka.Event) error {
 	message := &kafka.Message{
 		Value: []byte(msg),
 		TopicPartition: kafka.TopicPartition{
@@ -35,7 +48,7 @@ func Publish(msg string, topic string, producer *kafka.Producer, key []byte) err
 		Key: key,
 	}
 
-	err := producer.Produce(message, nil)
+	err := producer.Produce(message, deliveryChan)
 
 	if err != nil {
 		return err
