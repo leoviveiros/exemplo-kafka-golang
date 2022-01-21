@@ -1,4 +1,4 @@
-docker exec -it exemplo-kafka_kafka_1 bash
+docker exec -it exemplo-kafka-golang_kafka_1 bash
 
 ## Topics ##
 
