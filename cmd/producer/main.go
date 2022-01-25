@@ -20,6 +20,9 @@ func main() {
 func NewKafkaProducer() *kafka.Producer {
 	configMap := &kafka.ConfigMap{
 		"bootstrap.servers": "exemplo-kafka-golang_kafka_1:9092",
+		"delivery.timeout.ms": "1000",
+		"acks": "all",
+		"enable.idempotence": "true",
 	}
 
 	producer, err := kafka.NewProducer(configMap)
