@@ -17,11 +17,17 @@ kafka-console-consumer --bootstrap-server=localhost:9092 --topic=teste --group=x
 
 kafka-console-groups --bootstrap-server=localhost:9092 --group=x --describe
 
+go run cmd/consumer/main.go
+
 ## Producer ##
 
 kafka-console-producer --bootstrap-server=localhost:9092 --topic=teste
 
 go run cmd/producer/main.go
+
+## Consumer Group ##
+
+kafka-consumer-groups --bootstrap-server=localhost:9092 --describe --group=goapp-group
 
 ## Control Center ##
 
