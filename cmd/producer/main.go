@@ -10,7 +10,7 @@ func main() {
 	producer := NewKafkaProducer()
 	deliveryChan := make(chan kafka.Event)
 
-	Publish("Hello World", "teste", producer, nil, deliveryChan)
+	Publish("Transferiu", "teste", producer, []byte("transferencia"), deliveryChan)
 	
 	go DeliveyReport(deliveryChan)
 
