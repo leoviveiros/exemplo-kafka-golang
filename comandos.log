@@ -1,4 +1,5 @@
 docker exec -it exemplo-kafka-golang_kafka_1 bash
+docker exec -it gokafka bash
 
 ## Topics ##
 
@@ -19,6 +20,8 @@ kafka-console-groups --bootstrap-server=localhost:9092 --group=x --describe
 ## Producer ##
 
 kafka-console-producer --bootstrap-server=localhost:9092 --topic=teste
+
+go run cmd/producer/main.go
 
 ## Control Center ##
 
